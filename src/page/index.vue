@@ -145,28 +145,37 @@ export default {
                     this.$message.error('请填写完整信息！')
                     return
                 }
-                // 例如商品只需要上传id，则把商品obj更换为id值
                 if (i.type === 'product') {
-                    i.data = i.data.map(val => val.productId)
+                    i.data = i.data.map(val => val.productId).join(',')
                 }
             }
-            
-            // 上传所有广告图，替换 form 的本地链接
+
+            console.log(form)  // 提交的数据，根据接口形式修改
+
+            return
+
+            // 上传图片，修改数据字段（兼容接口
             const uploadPromise = {}
             for (let i = 0; i < this.view.length; i++) {
                 if (['images', 'banner'].includes(this.view[i].type)) {
                     uploadPromise[i] = []
-                    this.view[i].data.forEach((item, index) => {
+                    let list = this.view[i]['data']
+                    let count = 0
+                    list.forEach((item, index) => {
                         uploadPromise[i].push(
                             new Promise((resolve, reject) => {
-                                /**
-                                 * 替换成上传格式的数据
-                                 */
-                                imageUpload(item.form).then(res => {
-                                    if (typeof form[i]['data'] == 'string') {
-                                        form[i]['data'] += ',' + res.data.url
-                                    } else {
-                                        form[i]['data'] = res.data.url
+                                const link = item.link
+                                imageUpload(item.form).then(res => {    // 上传图片接口
+                                    count++
+                                    form[i]['data'][index] = {
+                                        url: res.data.url,
+                                        link
+                                    }
+                                    if (form[i]['data'].length === count) {
+                                        form[i]['imgRequests'] = form[i]['data']
+                                        for (let item of ['data', 'options']) {
+                                            delete form[i][item]
+                                        }
                                     }
                                     resolve(res)
                                 }).catch(err => {
@@ -183,20 +192,16 @@ export default {
                 for (let i in uploadPromise) {
                     Promise.all(uploadPromise[i]).then(res => {
                         count++
-                        // submit
                         if (count === len) {
-                            // pageInsert(form)
-                            console.log(form)
-                            console.log('2ok')
+                            // 提交数据
                         }
                     }).catch(err => {
-                        console.log(err)
+                        this.$message.error(err)
                     })
                 }
             } else {
-                console.log('1ok')
+                // 提交数据
             }
-            
         },
         // 切换视图组件
         selectType(index) {
@@ -228,9 +233,6 @@ export default {
             }
             e.preventDefault()
             e.stopPropagation()
-            /**
-             * 恢复默认状态
-             */
             this.dragEnd()
         },
         // 移动中
@@ -245,10 +247,10 @@ export default {
             let name = className !== 'view-content' ? 'item' : 'view-content'
             
             const defaultData = {
-                type: this.type,
-                status: 2,
-                data: [],
-                options: {}
+                type: this.type,    // 组件类型
+                status: 2,          // 默认状态
+                data: [],           // 数据
+                options: {}         // 选项操作
             }
 
             if (name == 'view-content') {

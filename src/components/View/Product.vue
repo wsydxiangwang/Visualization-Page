@@ -61,6 +61,10 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding: 4px 8px;
+    box-sizing: border-box;
+    * {
+        box-sizing: border-box;
+    }
     &.one .product-item{
         width: 100%;
         padding: 10px;
@@ -120,7 +124,8 @@ export default {
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                height: 30px;
+                height: 38px;
+                line-height: 18px;
             }
             .num{
                 font-size: 12px;

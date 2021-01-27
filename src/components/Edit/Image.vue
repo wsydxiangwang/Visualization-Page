@@ -20,7 +20,7 @@
                     <p>
                         <span>链接：</span>
                         <el-tooltip effect="dark" :content="item.link" placement="top" v-if="item.link">
-                            <span class="text">{{ item.link }}</span>
+                            <span class="text" @click="urlPopup(index, item.link)">{{ item.link }}</span>
                         </el-tooltip>
                         <span v-else @click="urlPopup(index)" class="link">请输入跳转链接</span>
                     </p>
@@ -114,6 +114,7 @@ export default {
         urlPopup(index) {
             this.show = true
             this.index = index
+            this.url = link
         },
 		removeImage(index) {
             this.list.data.splice(index, 1)
@@ -158,7 +159,7 @@ export default {
             const data = { 
                 name: file.name, 
                 url: URL.createObjectURL(file), 
-                form: Object.freeze(form)
+                form
             }
             
             if (index !== null) {

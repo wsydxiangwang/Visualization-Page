@@ -106,11 +106,6 @@ export default {
             this.$emit('changeTab', 2)
         }
 
-        console.log(this.data)
-        if (!this.list.options) {
-            this.list.options = {}
-        }
-
         // 默认开启所有选项
         for (let key in this.options) {
             if (this.data.options[key] == undefined) {
@@ -128,9 +123,7 @@ export default {
         },
         // 搜索商品
         searchProductList(productName) {
-            searchProduct({ productName }).then(res => {
-                this.productList = res.data
-            })
+            this.productList = productList
         },
         confirm() {
             this.list.data.push(this.selectItem)
@@ -149,6 +142,40 @@ export default {
         }
     }
 }
+// 模拟产品列表
+var productList = [{
+    "productId": 3601,
+    "productName": "驼大大新疆正宗骆驼奶粉初乳骆驼乳粉蓝罐礼盒装120g*4罐",
+    "productImg": "https://img.quanminyanxuan.com/excel/f6860885547648d9996474bbf21fdca9.jpg",
+    "productPrice": 299,
+    "originalPrice": 598,
+    "volumeStr": "741",
+    "goodRatio": 98
+}, {
+    "productId": 3268,
+    "productName": "百合28件套新骨质瓷餐具",
+    "productImg": "https://img.quanminyanxuan.com/excel/185e7365f65543f2b4ebc67036d6a78f.jpg",
+    "productPrice": 370,
+    "originalPrice": 1388,
+    "volumeStr": "400",
+    "goodRatio": 99
+}, {
+    "productId": 3343,
+    "productName": "和商臻品槐花蜜250克/瓶",
+    "productImg": "https://img.quanminyanxuan.com/excel/4626c8c628d04935b0262d04991416b2.jpg",
+    "productPrice": 34.5,
+    "originalPrice": 72,
+    "volumeStr": "258",
+    "goodRatio": 98
+}, {
+    "productId": 3330,
+    "productName": "鲍参翅肚浓羹350g袋装",
+    "productImg": "https://img.quanminyanxuan.com/excel/58a0c968dc7d42c3ac21e09d1862aa6f.jpg",
+    "productPrice": 75,
+    "originalPrice": 128,
+    "volumeStr": "258",
+    "goodRatio": 98
+}, ]
 </script>
 
 <style lang="scss">
