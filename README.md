@@ -38,17 +38,17 @@
 ```js
 .
 ├── components
-|   ├── Edit     # 右边编辑
+|   ├── Edit           ## 右边编辑
 |   |    ├── Info       # 基本信息
 |   |    ├── Image      # 广告图
 |   |    ├── Product    # 商品
 |   |    └── Index      # 管理编辑组件的信息
-|   └── View    # 中间视图
+|   └── View           ## 中间视图
 |   |    ├── Banner     # 轮播图
 |   |    ├── Images     # 广告图
 |   |    └── Product    # 产品列表
 └── page
-    └── index   # 主页面
+    └── index          ## 主页面
 ```
 
 ## 数据结构的定义
