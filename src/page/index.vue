@@ -17,7 +17,7 @@
             </ul>
         </section>
         <section class="c">
-            <!-- header 不可拖拽 -->
+            <!-- header 不可拖拽 --> 
             <div class="top-nav" @click="selectType(0)">
                 <img src="./../assets/images/topNavBlack.png">
                 <span class="tit">{{ info.title }}</span>
