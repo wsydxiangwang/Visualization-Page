@@ -37,21 +37,18 @@
 
 ```js
 .
-├── _config.yml    #网站配置
-├── package.json    #npm包信息
-├── scaffolds   #模板文件夹
-├── public   #生成的静态资源文件夹（需要添加到.gitignore文件中）
-├── node_modules   #项目依赖的node模块（需要添加到.gitignore文件中）
-├── source      #资源文件夹
-|   ├── _posts     #markdown文档文件夹（日常更新md文章存放路径）
-|   ├── _xx      #所有_开头的文件夹会被编译器忽略
-|   └── xx      #不会被编译器识别的普通文件夹 但是会直接打包的资源目录 （可访问）
-└── themes      #主题
-    └── maupassant     #maupassant主题包
-            ├── languages      #多语言文件
-            ├── layout      #布局模板文件
-            ├── source      #主题资源
-            └── _config.yml      #主题配置
+├── components
+|   ├── Edit     # 右边编辑
+|   |    ├── Info       # 基本信息
+|   |    ├── Image      # 广告图
+|   |    ├── Product    # 商品
+|   |    └── Index      # 管理编辑组件的信息
+|   └── View    # 中间视图
+|   |    ├── Banner     # 轮播图
+|   |    ├── Images     # 广告图
+|   |    └── Product    # 产品列表
+└── page
+    └── index   # 主页面
 ```
 
 ## 数据结构的定义
