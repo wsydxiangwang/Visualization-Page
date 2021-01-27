@@ -1,24 +1,78 @@
 # 可视化页面编辑器
 
-## Project setup
+
+[Github：项目地址，有兴趣可以看看！](https://github.com/wsydxiangwang/Visualization-Page)
+
+可视化页面编辑器，听起来可望不可即是吧，先来张动图观摩观摩一番！
+
+![](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e33c4169a094e9284aed20c0921ae66~tplv-k3u1fbpfcp-watermark.image)
+
+要实现这种功能，在网上参考了很多资料，貌似一无所获，千篇一律，就是没有适合我方需求的！
+
+这里的亮点在于对象和引用、数据结构的实现、来一一讲解一下其中的细节吧！！
+
+## 拖拽实现
+
+
+
+### 
+
+### 角度计算
+
+
+### 边界处理
+
+### 内容块拖拽实现
+
+因时间关系，这里偷懒了，使用了一个较为完美的拖拽插件
+
+后面想自己去实现这个功能，研究了一会，还是有一定的复杂程度，因时间关系还是不折腾了
+
+具体实现
+
+
+## 组件划分
+
+中间视图，右边编辑区，为一套一套的，不愧是一套一套！
+
 ```
-npm install
+.
+├── _config.yml    #网站配置
+├── package.json    #npm包信息
+├── scaffolds   #模板文件夹
+├── public   #生成的静态资源文件夹（需要添加到.gitignore文件中）
+├── node_modules   #项目依赖的node模块（需要添加到.gitignore文件中）
+├── source      #资源文件夹
+|   ├── _posts     #markdown文档文件夹（日常更新md文章存放路径）
+|   ├── _xx      #所有_开头的文件夹会被编译器忽略
+|   └── xx      #不会被编译器识别的普通文件夹 但是会直接打包的资源目录 （可访问）
+└── themes      #主题
+    └── maupassant     #maupassant主题包
+            ├── languages      #多语言文件
+            ├── layout      #布局模板文件
+            ├── source      #主题资源
+            └── _config.yml      #主题配置
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 数据结构的定义
 
-### Compiles and minifies for production
-```
-npm run build
-```
+实现一个鲜艳且具有扩展性的功能，那么定义一个符合条件的数据结构是必不可少！
 
-### Lints and fixes files
-```
-npm run lint
-```
+同时也能决定你的代码量、可维护性！
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+当然，还是得由自身的逻辑思维来决定！
+
+
+
+##
+这里，我觉得最亮眼的处理方法为：组件之间的传值，只需一次！
+
+借用了对象是引用类型，所存空间一致的方法，视图会跟随编辑的变化而变化，无需过多操作！
+
+最后一步
+
+数据的操作处理
+
+## 评价一下
+
+这只能算是一个简陋粗略版，具体核心实现了，剩下的问题都已不再是问题了，有兴趣可以自己去琢磨琢磨，完善起来！
