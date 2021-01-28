@@ -294,8 +294,6 @@ export default {
                 }
                 this.index = curIndex
                 this.isPush = true
-            } else {
-                this.index = 0
             }
         }
     }
