@@ -160,22 +160,16 @@ export default {
                 if (['images', 'banner'].includes(this.view[i].type)) {
                     uploadPromise[i] = []
                     let list = this.view[i]['data']
-                    let count = 0
                     list.forEach((item, index) => {
                         uploadPromise[i].push(
                             new Promise((resolve, reject) => {
                                 const link = item.link
+                                const name = item.name
                                 imageUpload(item.form).then(res => {    // 上传图片接口
-                                    count++
                                     form[i]['data'][index] = {
                                         url: res.data.url,
-                                        link
-                                    }
-                                    if (form[i]['data'].length === count) {
-                                        form[i]['imgRequests'] = form[i]['data']
-                                        for (let item of ['data', 'options']) {
-                                            delete form[i][item]
-                                        }
+                                        link,
+                                        name
                                     }
                                     resolve(res)
                                 }).catch(err => {
