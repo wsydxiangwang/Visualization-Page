@@ -1,7 +1,7 @@
 <template>
     <!-- Banner & Image 通用组件 -->
     <div class="image-content">
-        <p class="desc">添加图片 (最多{{ count }}张，可拖动排序）</p>
+        <p class="desc">添加图片 (最多{{ len }}张，可拖动排序）</p>
         <vuedraggable
             v-model="list.data"
             tag="ul"
@@ -34,16 +34,17 @@
                 </div>
             </li>
         </vuedraggable>
-        <el-button 
-            v-if="list.data && list.data.length < len" 
-            type="primary" 
-            icon="el-icon-plus" 
-            @click="addImage(null)"
-            class="add-image"
-        >
-            添加图片
-        </el-button>
-        <p class="size" v-if="list.data && list.data.length < 8" >（建议尺寸：{{ size }}）</p>
+        <template v-if="list.data && list.data.length < len" >
+            <el-button 
+                type="primary" 
+                icon="el-icon-plus" 
+                @click="addImage(null)"
+                class="add-image"
+            >
+                添加图片
+            </el-button>
+            <p class="size">（建议尺寸：{{ size }}）</p>
+        </template>
         <el-upload
             ref="upload"
             :http-request="upload"
@@ -89,9 +90,6 @@ export default {
         }
     },
     computed: {
-        count() {
-            return this.list.type == 'images' ? (this.data.tabType == 2 ? 4 : 8) : 10
-        },
         size() {
             return this.list.type == 'images' ? '750*750' : '750*400'
         },
@@ -216,13 +214,6 @@ export default {
         }
         &::-webkit-scrollbar{
             width: 6px;
-        }
-        &.disable li:nth-of-type(4) ~ li{
-            filter: grayscale(100%);
-            -webkit-filter: grayscale(100%);
-            -moz-filter: grayscale(100%);
-            -ms-filter: grayscale(100%);
-            -o-filter: grayscale(100%);
         }
         li{
             list-style: none;

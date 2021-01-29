@@ -47,22 +47,18 @@ export default {
     }
     &.two{
         display: flex;
-        padding: 4px 8px;
+        flex-wrap: wrap;
         box-sizing: content-box;
         a{
-            width: calc(25% - 8px);
+            width: 50%;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
             display: block;
-            padding-bottom: calc(25% - 8px);
-            margin: 4px;
+            padding-bottom: 50%;
             background: #e4e4e4;
             img{
                 position: absolute;
-            }
-            &:nth-of-type(4) ~ a{
-                display: none;
             }
         }
     }

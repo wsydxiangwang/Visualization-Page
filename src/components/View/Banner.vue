@@ -22,7 +22,6 @@ export default {
 <style lang="scss" scoped>
 .banner{
     font-size: 0;
-    padding: 8px 0;
     img{
         width: 100%;
     }
