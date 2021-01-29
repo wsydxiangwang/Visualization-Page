@@ -64,7 +64,6 @@ export default {
     }
     &.three{
         height: 100px;
-        padding: 4px 8px;
         overflow-y: auto;
         white-space: nowrap;
         box-sizing: content-box;

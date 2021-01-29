@@ -237,17 +237,21 @@ drog(e) {
 
 ### 内容块拖拽实现
 
-因时间关系，这里偷懒了，使用了一个较为完美的拖拽插件 [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable) (star 14.2k)
+因时间关系，这里偷懒了，使用了一个较为完美的列表拖拽插件 [Vue.Draggable](https://github.com/SortableJS/Vue.Draggable) (star 14.2k)
 
-后面想自己去实现这个功能，研究了一会，还是有一定的复杂程度（slot、DOM），因时间关系还是不折腾了
+研究了一会，其逻辑和上方实现的拖拽有一定联系，具体实现方法大同小异，相信有了上面的实战案例，你也就能做出来了！
 
-具体实现方法大同小异，相信有了上面的实战案例，你也就能做出来了！
+要不，你动手试试？ 
+
+可以根据`Vue.Draggable`的使用方式，来实现一个拖拽组件，具体会用到（drag、slot、DOM）等等
+
+（后面有时间，我再回来封装一个）
 
 ## 组件划分
 
 中间视图组件，右边编辑组件，为一套一套的，果然是一套一套的，不愧是有一套一套的！
 
-`page=>index` 则管理着整个页面的布局
+`page=>index` 则管理着整个页面的内容
 
 ```bash
 .
@@ -281,7 +285,9 @@ drog(e) {
 view: [
     {
         type: 'info',
-        title: '页面标题'
+        title: '页面标题',
+        remarks: '页面备注',
+        backgroundColor: 'red'
     },
     {
         type: 'banner',
@@ -318,19 +324,90 @@ view: [
 - `data`：基本信息
 - `options`：其他操作
 
-....可按照需求，再自行添加操作
+....可参考原有组件模块，按照需求去自行扩展等操作
 
+## 图片上传
 
+刚好上面有图片上传组件，这里分享一下我的使用技巧！！
 
+使用 `Element-ui` 自带上传组件的朋友，看过来（敲黑板）
 
-这个功能最终不过是提交一个`list`数据，数据的`item`为视图的模块，在右边编辑的同时，也要能更新到中间的视图区。
+我们先来实现一个简约版的：
+
+```html
+<!-- 禁用所有默认方法 -->
+<el-upload
+    :http-request="upload"
+    :show-file-list="false"
+    multiple
+    action
+>
+    <img :src="item.url" v-for="(item, index) in list" :key="index">
+</el-upload>
+<script>
+upload(params) {
+    const file = params.file;
+    const form = new FormData();
+    form.append("file", file);
+    form.append("clientType", "multipart/form-data");
+
+    const index = this.imageIndex
+    const data = { 
+        url: URL.createObjectURL(file), 
+        form
+    }
+    if (index !== null) {
+        this.$set(this.list, index, data)
+    } else {
+        this.list.push(data)
+    }
+}
+</script>
+```
+
+- 重写上传方法
+- 使用 `URL.createObjectURL(file)` 创建一个本地预览的地址
+- 把 `form` 对象存起来，提交时再上传
+
+```js
+// 根据上面的代码，使用Promise实现上传功能
+const request = []
+this.list.forEach(item => {
+    request.push(
+        new Promise((resolve, reject) => {
+            /**
+             * 上传接口
+             * 替换原 url
+             * 删除 form
+             */
+            imageUpload(item.form).then(res => {
+                item.url = res.data.url
+                delete item.form
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    )
+})
+Promise.all(request).then(res => {
+    // ... submit ...
+})
+```
+
+等到最后一步提交数据的时候，再上传所有的图片，结束之后再去调用提交数据的接口！！
+
 
 
 ## 最后总结
 
-这只能算是一个简陋粗略版，具体核心实现了，剩下的问题已不再是问题！
-
 无论是新增组件、新增规则，
+
+我司的需求就是这么一个简陋版，但其实并不简陋：
+
+"数据结构的定型，组件交互的处理。"
+
+核心点已经实现了，其他的——例如新增组件、新增操作等等，已经不是问题了，剩下的问题已不再是问题！
 
 有兴趣可以自己去琢磨琢磨，完善起来！
 
