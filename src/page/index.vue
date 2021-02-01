@@ -150,6 +150,8 @@ export default {
                 }
             }
 
+            this.$message.success('数据提交成功，请按F12打开控制台查看待提交数据集合！')
+
             console.log(form)  // 提交的数据，根据接口形式修改
 
             return
