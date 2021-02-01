@@ -1,6 +1,6 @@
 # 可视化页面编辑器
 
-[在线地址](https://demo-page.raindays.cn)
+[在线地址](https://demo-page.raindays.cn) (用梯子会更快些)
 
 可视化页面编辑器，听起来可望不可即是吧，先来张动图观摩观摩一番！
 
