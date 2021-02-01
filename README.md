@@ -425,4 +425,4 @@ Promise.all(request).then(res => {
 
 以上可按照需求，去优化、去琢磨、去完善，吸收成为自己的知识！
 
-[Github 地址，感谢您的 star，我是不吃茶的李白。](https://github.com/wsydxiangwang/Visualization-Page)
+[更多的细节，欢迎查看源码，Github 地址献上，感谢您的 star，我是不吃茶的李白。](https://github.com/wsydxiangwang/Visualization-Page)
