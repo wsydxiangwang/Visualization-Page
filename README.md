@@ -100,7 +100,7 @@ dragStart(e) {
 确定类型后，再进入下一步的释放区域
 ### 在释放区域中移动
 
-移动的过程中，需要根据鼠标位置实时更新拖拽元素的位置，具体可往下翻预览动图效果！
+移动的过程中，需要根据鼠标位置实时计算拖拽元素的位置，具体可往下翻预览动图效果！
 
 ```js
 // 'view-content': 外层盒子的class，直接 push
@@ -260,11 +260,9 @@ drog(e) {
 
 实现一个鲜艳且具有扩展性的功能，那么定义一个符合条件的数据结构是必不可少的！与此同时也能决定你的代码质量！
 
-当然，还是得由自身的逻辑思维来决定！
+当然，还是得由自身所学和逻辑思维来决定！
 
-这里最亮眼的处理方法为：**借用对象的关系，使得组件之间的传值，只需单向一次！**
-
-对象是指向同一个内存地址的，存在着一种引用关系，只需修改一次即可实现多方位的数据更新！
+这里最为亮眼的处理方式：**借用对象的关系，使得组件之间的传值，只需单向传输一次！**
 
 ```js
 view: [
@@ -311,6 +309,28 @@ view: [
 
 ....可参考原有组件模块，按照需求去自行扩展等操作
 
+## 编辑组件的传值
+
+选择视图组件的时候，把`view`里面指定的`item`对象作为参数传递给编辑组件！
+
+对象是指向同一个内存地址的，存在着一种引用关系，只需修改一次即可实现多方位的数据更新！
+
+```html
+<section class="r">
+    <EditForm
+        :data="props"
+        v-if="isRight"
+    ></EditForm>
+</section>
+<script>
+// 切换视图组件
+selectType(index) {
+    this.isRight = false
+    this.props = this.view[index]
+    this.$nextTick(() => this.isRight = true)
+}
+</script>
+```
 ## 图片上传
 
 刚好上面有图片上传组件，这里分享一下我的使用技巧！！
@@ -336,12 +356,13 @@ upload(params) {
     form.append("file", file);
     form.append("clientType", "multipart/form-data");
 
-    const index = this.imageIndex
+    const index = this.imageIndex   // 编辑图片的索引
     const data = { 
         url: URL.createObjectURL(file), 
         form
     }
     if (index !== null) {
+        // this.list => 图片集合
         this.$set(this.list, index, data)
     } else {
         this.list.push(data)
@@ -398,10 +419,10 @@ Promise.all(request).then(res => {
 
 ## 最后总结
 
-"数据结构的定型，组件交互的处理。"
+此功能刚好为工作上的需求，其实并不复杂，重点在于数据结构的定型、组件交互的处理、逻辑方式等规划，只要这一步核心的点实现了。
 
-核心点已经实现了，其他的——例如新增组件、新增操作等等，剩下的问题已不再是问题！
+其他的，例如新增组件、新增操作等等，剩下的问题已不再是问题！
 
-可按照需求，去优化，有兴趣可以自己去琢磨琢磨，完善起来！
+以上可按照需求，去优化、去琢磨、去完善，吸收成为自己的知识！
 
 [Github 地址，感谢您的 star，我是不吃茶的李白。](https://github.com/wsydxiangwang/Visualization-Page)
